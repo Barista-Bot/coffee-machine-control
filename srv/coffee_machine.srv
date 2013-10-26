@@ -1,0 +1,4 @@
+string coffee_type
+---
+bool success
+string response
