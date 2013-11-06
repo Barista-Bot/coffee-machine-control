@@ -16,4 +16,4 @@ def coffee_machine_client(coffee_type):
         print "Service call failed: %s"%e
 
 if __name__ == "__main__":
-    coffee_machine_client("dharkan")
+    coffee_machine_client("espresso")
