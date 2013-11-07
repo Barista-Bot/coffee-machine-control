@@ -4,10 +4,10 @@ from coffee_machine_control.srv import *
 import rospy
 
 coffee_capsule_loader={
-    'coffee_type: volluto':(1,10),
-    'coffee_type: caramelito':(2,10),
-    'coffee_type: kazaar':(3,10),
-    'coffee_type: dharkan':(4,10)
+    'coffee_type: mocha':(1,10),
+    'coffee_type: caramel':(2,10),
+    'coffee_type: vanilla':(3,10),
+    'coffee_type: espresso':(4,10)
 }
 
 def setup_coffee_for_vending(coffee_type):
