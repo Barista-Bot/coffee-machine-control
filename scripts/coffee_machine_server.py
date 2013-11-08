@@ -12,20 +12,20 @@ coffee_capsule_loader={
     'coffee_type: espresso':(4,10)
 }
 
-output_bus = [17 18 21 22]
+output_bus = [14, 15, 18, 23]
 
 step_sequence = [
-    [1,0,0,0]
-    [1,1,0,0]
-    [0,1,0,0]
-    [0,1,1,0]
-    [0,0,1,0]
-    [0,0,1,1]
-    [0,0,0,1]
-    [1,0,0,1]
+    [1, 0, 0, 0],
+    [1, 1, 0, 0],
+    [0, 1, 0, 0],
+    [0, 1, 1, 0],
+    [0, 0, 1, 0],
+    [0, 0, 1, 1],
+    [0, 0, 0, 1],
+    [1, 0, 0, 1]
 ]
 
-def setup_gpio:
+def setup_gpio():
     GPIO.setmode(GPIO.BCM)
     for gpio_channel in output_bus:
         GPIO.setup(gpio_channel, GPIO.OUT)
@@ -37,22 +37,23 @@ def setup_coffee_for_vending(coffee_type):
 
     if (coffee_capsule_loader[str(coffee_type)][1] == 0):
         return coffee_machineResponse(False, "Out of chosen capsules")
-    else:
-        coffee_capsule_loader[str(coffee_type)][1] -= 1
+
 
     # Rotate capsule holder
 
     # Load capsule
     print "Loading capsule"
-    for step_count in range(0, 8):
-        print "."
-        for bit in range(0, 4):
-            if !step_sequence[step_count][bit]:
-                GPIO.output(output_bus[bit], True)
-            else:
-                GPIO.output(output_bus[bit], False)
+    while True:
+    	for step_count in range(0, 8):
+        	print "."
+        	for bit in range(0, 4):
+            		if (step_sequence[step_count][bit] == 0):
+                		GPIO.output(output_bus[bit], True)
+            		else:
+                		GPIO.output(output_bus[bit], False)
+		time.sleep(0.01)
     print "Capsule loading complete, ready to vend."
-return coffee_machineResponse(True, "Capsule loaded.")
+    return coffee_machineResponse(True, "Capsule loaded.")
 
 def coffee_machine_control_server():
     setup_gpio()
