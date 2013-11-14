@@ -12,7 +12,7 @@ coffee_capsule_loader={
     'coffee_type: espresso':(4,10)
 }
 
-output_bus = [14, 15, 18, 23]
+output_bus = [17, 22, 23, 4]
 
 step_sequence = [
     [1, 0, 0, 0],
@@ -51,7 +51,7 @@ def setup_coffee_for_vending(coffee_type):
                 		GPIO.output(output_bus[bit], True)
             		else:
                 		GPIO.output(output_bus[bit], False)
-		time.sleep(0.01)
+		time.sleep(0.004)
     print "Capsule loading complete, ready to vend."
     return coffee_machineResponse(True, "Capsule loaded.")
 
