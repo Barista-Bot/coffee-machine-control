@@ -15,11 +15,12 @@ coffee_capsule_dispenser={
 
 current_coffee_capsule_dispenser_position = pickle.load(open("/home/pi/settings.p", 'rb')) 
 steps_per_quarter_rotation = 128
-loader_motor_activation_time = 2
+loader_motor_reverse_activation_time = 2
+loader_motor_forward_activation_time = 2
 
 stepper_output_gpio_bus = [17, 22, 23, 4]
-motor_left_gpio = 24
-motor_right_gpio = 25
+motor_forward_gpio = 24
+motor_reverse_gpio = 25
 
 step_sequence = [
     [1, 0, 0, 0],
@@ -39,8 +40,8 @@ def setup_gpio():
         GPIO.output(gpio_channel, True) # all outputs are inverted
     GPIO.setup(motor_left_gpio, GPIO.OUT)
     GPIO.setup(motor_right_gpio, GPIO.OUT)
-    GPIO.output(motor_left_gpio, True)
-    GPIO.output(motor_right_gpio, True)
+    GPIO.output(motor_forward_gpio, True)
+    GPIO.output(motor_reverse_gpio, True)
     
 def setup_coffee_for_manual_vending(coffee_type):
 
@@ -48,6 +49,11 @@ def setup_coffee_for_manual_vending(coffee_type):
 
     if (coffee_capsule_dispenser[str(coffee_type)][1] == 0):
         return coffee_machineResponse(False, "Out of chosen capsules")
+
+    # Empty loader of previous cartridge
+    GPIO.output(motor_forward_gpio, False)
+    time.sleep(loader_motor_forward_activation_time)
+    GPIO.output(motor_forward_gpio, True)
 
     # Rotate capsule holder to select chosen capsule
     print "Coffee Machine: Current capsule dispenser position is "+str(current_coffee_capsule_dispenser_position)
@@ -73,11 +79,10 @@ def setup_coffee_for_manual_vending(coffee_type):
  
     # Load selected capsule into machine
     print "Coffee Machine: Loading capsule into Nespresso machine"
-    GPIO.output(motor_left_gpio, False)
-    GPIO.output(motor_right_gpio, False)
-    time.sleep(loader_motor_activation_time)
-    GPIO.output(motor_left_gpio, True)
-    GPIO.output(motor_right_gpio, True)
+    GPIO.output(motor_reverse_gpio, False)
+    time.sleep(loader_motor_reverse_activation_time)
+    GPIO.output(motor_reverse_gpio, True)
+    
     print "Coffee Machine: Capsule loaded into Nespresso machine, ready for manual coffee vend"
  
     # Decrement capsule count
