@@ -19,8 +19,8 @@ loader_motor_reverse_activation_time = 2
 loader_motor_forward_activation_time = 2
 
 stepper_output_gpio_bus = [17, 22, 23, 4]
-motor_forward_gpio = 24
-motor_reverse_gpio = 25
+motor_reverse_gpio = 24
+motor_forward_gpio = 25
 
 step_sequence = [
     [1, 0, 0, 0],
@@ -40,8 +40,8 @@ def setup_gpio():
         GPIO.output(gpio_channel, True) # all outputs are inverted
     GPIO.setup(motor_forward_gpio, GPIO.OUT)
     GPIO.setup(motor_reverse_gpio, GPIO.OUT)
-    GPIO.output(motor_forward_gpio, True)
-    GPIO.output(motor_reverse_gpio, True)
+    GPIO.output(motor_forward_gpio, False)
+    GPIO.output(motor_reverse_gpio, False)
     
 def setup_coffee_for_manual_vending(coffee_type):
 
@@ -51,14 +51,14 @@ def setup_coffee_for_manual_vending(coffee_type):
         return coffee_machineResponse(False, "Out of chosen capsules")
 
     # Empty loader of previous cartridge
-    GPIO.output(motor_forward_gpio, False)
-    time.sleep(loader_motor_forward_activation_time)
     GPIO.output(motor_forward_gpio, True)
+    time.sleep(loader_motor_forward_activation_time)
+    GPIO.output(motor_forward_gpio, False)
 
     # Rotate capsule holder to select chosen capsule
     print "Coffee Machine: Current capsule dispenser position is "+str(current_coffee_capsule_dispenser_position)
     print "Coffee Machine: Rotating capsule dispenser to position "+str(coffee_capsule_dispenser[str(coffee_type)][0])
-#    pickle.dump(coffee_capsule_dispenser[str(coffee_type)][0], open("/home/pi/settings.p", "wb"))
+    pickle.dump(coffee_capsule_dispenser[str(coffee_type)][0], open("/home/pi/settings.p", "wb"))
     quarter_rotation_steps_needed = (coffee_capsule_dispenser[str(coffee_type)][0] - current_coffee_capsule_dispenser_position) % 4
     for quarter_rotation_count in range(0, quarter_rotation_steps_needed):    
 	for step_count in range(1, steps_per_quarter_rotation):
@@ -79,9 +79,9 @@ def setup_coffee_for_manual_vending(coffee_type):
  
     # Load selected capsule into machine
     print "Coffee Machine: Loading capsule into Nespresso machine"
-    GPIO.output(motor_reverse_gpio, False)
-    time.sleep(loader_motor_reverse_activation_time)
     GPIO.output(motor_reverse_gpio, True)
+    time.sleep(loader_motor_reverse_activation_time)
+    GPIO.output(motor_reverse_gpio, False)
     
     print "Coffee Machine: Capsule loaded into Nespresso machine, ready for manual coffee vend"
  
