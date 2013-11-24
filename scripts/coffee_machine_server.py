@@ -38,8 +38,8 @@ def setup_gpio():
     for gpio_channel in stepper_output_gpio_bus:
         GPIO.setup(gpio_channel, GPIO.OUT)
         GPIO.output(gpio_channel, True) # all outputs are inverted
-    GPIO.setup(motor_left_gpio, GPIO.OUT)
-    GPIO.setup(motor_right_gpio, GPIO.OUT)
+    GPIO.setup(motor_forward_gpio, GPIO.OUT)
+    GPIO.setup(motor_reverse_gpio, GPIO.OUT)
     GPIO.output(motor_forward_gpio, True)
     GPIO.output(motor_reverse_gpio, True)
     
