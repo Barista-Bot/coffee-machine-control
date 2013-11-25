@@ -37,7 +37,7 @@ def setup_gpio():
     GPIO.setmode(GPIO.BCM)
     for gpio_channel in stepper_output_gpio_bus:
         GPIO.setup(gpio_channel, GPIO.OUT)
-        GPIO.output(gpio_channel, True) # all outputs are inverted
+        GPIO.output(gpio_channel, False)
     GPIO.setup(motor_forward_gpio, GPIO.OUT)
     GPIO.setup(motor_reverse_gpio, GPIO.OUT)
     GPIO.output(motor_forward_gpio, False)
@@ -65,15 +65,15 @@ def setup_coffee_for_manual_vending(coffee_type):
     		for step in range(0, 8):
                		for gpio_channel in range(0, 4):
             			if (step_sequence[step][gpio_channel] == 0):
-                			GPIO.output(stepper_output_gpio_bus[gpio_channel], True)
+                			GPIO.output(stepper_output_gpio_bus[gpio_channel], False
             			else:
-                			GPIO.output(stepper_output_gpio_bus[gpio_channel], False)
+                			GPIO.output(stepper_output_gpio_bus[gpio_channel], True)
 			time.sleep(0.01)
 			
     # Disable stepper to prevent overheating
     for gpio_channel in stepper_output_gpio_bus:
         GPIO.setup(gpio_channel, GPIO.OUT)
-        GPIO.output(gpio_channel, True) 
+        GPIO.output(gpio_channel, False) 
         
     print "Coffee Machine: Capsule selected and added to loader"
  
