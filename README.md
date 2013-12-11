@@ -13,5 +13,5 @@ To run the node on the Pi, run the following commands;
 
 - `export ROS_MASTER_URI=http://<IP Address of Host>:11311` (Points this ROS node to use a remote master - note that `roscore` must be running on the remote host)
 
-- `rosrun coffee-machine-control coffee-machine-server.py` (Runs the ROS node itself)
+- `rosrun coffee_machine_control coffee_machine_server.py` (Runs the ROS node itself)
 
