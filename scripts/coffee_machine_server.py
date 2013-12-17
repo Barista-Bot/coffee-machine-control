@@ -110,6 +110,7 @@ def setup_coffee_for_manual_vending(coffee_type):
 	time.sleep(0.0016)
 	GPIO.output(27, 0)
 	time.sleep(0.0016)
+
     #Retract ServoMotor
     for count in range(0, 100):
 	GPIO.output(27, 1)
@@ -132,4 +133,5 @@ def coffee_machine_control_server():
 
 if __name__ == "__main__":
     coffee_machine_control_server()
+
 
